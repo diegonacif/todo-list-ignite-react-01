@@ -20,6 +20,8 @@ $font-primary: 'Inter', sans-serif;
   padding: 0;
   box-sizing: border-box;
   font-family: $font-primary;
+
+  -webkit-tap-highlight-color: transparent; // remove color highlight on tap
 }
 
 .App {
