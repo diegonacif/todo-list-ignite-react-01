@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { useLocalStorage } from 'usehooks-ts'
+
 import { PlusCircle } from '@phosphor-icons/react';
 import clipboard from '../../assets/Clipboard.svg';
 import trash from '../../assets/trash.svg';
-import { v4 as uuidv4 } from 'uuid';
+
 import '../../App.scss';
 
 interface ITasksItem {
@@ -13,7 +16,7 @@ interface ITasksItem {
 
 export const Body = () => {
   const [taskInput, setTaskInput] = useState('');
-  const [tasks, setTasks] = useState<ITasksItem[]>([]);
+  const [tasks, setTasks] = useLocalStorage<ITasksItem[]>('todo-tasks', []);
 
   console.log(tasks)
 
@@ -25,10 +28,12 @@ export const Body = () => {
     };
 
     setTasks([...tasks, newTask]);
+    setTaskInput('');
   }
 
-  const deleteTask = () => {
-    console.log('delete task');
+  const deleteTask = (id: string) => {
+    const updatedTasks = tasks.filter(task => task.id !== id);
+    setTasks(updatedTasks);
   }
 
   return (
@@ -72,7 +77,7 @@ export const Body = () => {
                   src={trash} 
                   alt="delete icon" 
                   id="delete-icon" 
-                  onClick={() => deleteTask()} 
+                  onClick={() => deleteTask(task.id)} 
                 />
               </div>
             ))
