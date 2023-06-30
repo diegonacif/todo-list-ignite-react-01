@@ -73,13 +73,13 @@ export const Body = () => {
           <div className="info-status">
             <span className="info-title">Tarefas criadas</span>
             <div className="counter-wrapper">
-              <span>0</span>
+              <span>{tasks.length}</span>
             </div>
           </div>
           <div className="info-status">
-            <span className="info-title">Concluídas</span>
+            <span className="info-title done">Concluídas</span>
             <div className="counter-wrapper">
-              <span>0</span>
+              <span>{tasks.filter(task => task.isComplete === true).length}</span>
             </div>
           </div>
         </div>
