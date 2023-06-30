@@ -4,6 +4,8 @@ import { useLocalStorage } from 'usehooks-ts'
 
 import { PlusCircle } from '@phosphor-icons/react';
 import clipboard from '../../assets/Clipboard.svg';
+import check from '../../assets/check.svg';
+import checked from '../../assets/checked.svg';
 import trash from '../../assets/trash.svg';
 
 import '../../App.scss';
@@ -18,7 +20,7 @@ export const Body = () => {
   const [taskInput, setTaskInput] = useState('');
   const [tasks, setTasks] = useLocalStorage<ITasksItem[]>('todo-tasks', []);
 
-  console.log(tasks)
+  console.log( tasks );
 
   const createTask = () => {
     const newTask: ITasksItem = {
@@ -33,6 +35,20 @@ export const Body = () => {
 
   const deleteTask = (id: string) => {
     const updatedTasks = tasks.filter(task => task.id !== id);
+    setTasks(updatedTasks);
+  }
+
+  const toggleIsComplete = (id: string) => {
+    const updatedTasks = tasks.map(task => {
+      if (task.id === id) {
+        return {
+          ...task,
+          isComplete: !task.isComplete,
+        };
+      }
+      return task;
+    });
+
     setTasks(updatedTasks);
   }
 
@@ -67,28 +83,34 @@ export const Body = () => {
             </div>
           </div>
         </div>
-        <div className="tasks-wrapper">
-          {
-            tasks.map((task) => (
-              <div className="task-line" key={task.id}>
-                <div className="not-complete"></div>
-                <p>{task.description}</p>
-                <img 
-                  src={trash} 
-                  alt="delete icon" 
-                  id="delete-icon" 
-                  onClick={() => deleteTask(task.id)} 
-                />
-              </div>
-            ))
-          }
-          
-        </div>
-        {/* <div className="empty-wrapper">
-          <img src={clipboard} alt="clipboard" />
-          <h4>Você ainda não tem tarefas cadastradas</h4>
-          <span>Crie tarefas e organize seus itens a fazer</span>
-        </div> */}
+        {
+          tasks.length === 0 ?
+          <div className="empty-wrapper">
+            <img src={clipboard} alt="clipboard" />
+            <h4>Você ainda não tem tarefas cadastradas</h4>
+            <span>Crie tarefas e organize seus itens a fazer</span>
+          </div> :
+          <div className="tasks-wrapper">
+            {
+              tasks.map((task) => (
+                <div className="task-line" key={task.id}>
+                  {
+                    task.isComplete ?
+                    <img src={checked} alt="check is marked" className="check-icon" onClick={() => toggleIsComplete(task.id)} /> :
+                    <img src={check} alt="check is not marked" className="check-icon" onClick={() => toggleIsComplete(task.id)} />
+                  }
+                  <p className={task.isComplete ? 'description-completed' : ''}>{task.description}</p>
+                  <img 
+                    src={trash} 
+                    alt="delete icon" 
+                    id="delete-icon" 
+                    onClick={() => deleteTask(task.id)} 
+                  />
+                </div>
+              ))
+            }
+          </div>
+        }
       </section>
     </div>
   )
