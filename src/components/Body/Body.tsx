@@ -1,6 +1,7 @@
-import clipboard from '../../assets/Clipboard.svg';
-import '../../App.scss';
 import { PlusCircle } from '@phosphor-icons/react';
+import clipboard from '../../assets/Clipboard.svg';
+import trash from '../../assets/trash.svg';
+import '../../App.scss';
 
 export const Body = () => {
   return (
@@ -29,11 +30,23 @@ export const Body = () => {
             </div>
           </div>
         </div>
-        <div className="empty-wrapper">
+        <div className="tasks-wrapper">
+          <div className="task-line">
+            <div className="not-complete"></div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio enim exercitationem quas mollitia, corrupti voluptatem consequuntur praesentium deleniti aliquid commodi, cumque nam quibusdam, saepe officiis. Eligendi facilis adipisci dicta veniam?</p>
+            <img src={trash} alt="delete icon" id="delete-icon" />
+          </div>
+          <div className="task-line">
+            <div className="not-complete"></div>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+            <img src={trash} alt="delete icon" />
+          </div>
+        </div>
+        {/* <div className="empty-wrapper">
           <img src={clipboard} alt="clipboard" />
           <h4>Você ainda não tem tarefas cadastradas</h4>
           <span>Crie tarefas e organize seus itens a fazer</span>
-        </div>
+        </div> */}
       </section>
     </div>
   )

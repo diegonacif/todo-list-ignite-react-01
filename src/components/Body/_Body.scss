@@ -101,6 +101,43 @@
 
     }
 
+    .tasks-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      color: $gray-100;
+      margin-top: 1.5rem;
+
+      .task-line {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        gap: 0.75rem;
+        background-color: $gray-500;
+        border: 1px solid $gray-400;
+        border-radius: 8px;
+        padding: 1rem;
+
+        .not-complete {
+          width: 1.25rem;
+          height: 1.25rem;
+          border: 2px solid $blue;
+          border-radius: 9999px;
+        }
+
+        p {
+          display: flex;
+          flex-direction: column;
+          flex: 1 0 0; 
+        }
+
+        #delete-icon {
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+      }
+    }
+
     .empty-wrapper {
       display: flex;
       flex-direction: column;
