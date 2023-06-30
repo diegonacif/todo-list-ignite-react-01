@@ -1,15 +1,47 @@
+import { useState } from 'react';
 import { PlusCircle } from '@phosphor-icons/react';
 import clipboard from '../../assets/Clipboard.svg';
 import trash from '../../assets/trash.svg';
+import { v4 as uuidv4 } from 'uuid';
 import '../../App.scss';
 
+interface ITasksItem {
+  id: string;
+  description: string;
+  isComplete: boolean;
+}
+
 export const Body = () => {
+  const [taskInput, setTaskInput] = useState('');
+  const [tasks, setTasks] = useState<ITasksItem[]>([]);
+
+  console.log(tasks)
+
+  const createTask = () => {
+    const newTask: ITasksItem = {
+      id: uuidv4(),
+      description: taskInput,
+      isComplete: false
+    };
+
+    setTasks([...tasks, newTask]);
+  }
+
+  const deleteTask = () => {
+    console.log('delete task');
+  }
+
   return (
     <div className="body-container">
       <header id="todo-header">
         <div className="input-wrapper">
-          <input type="text" placeholder="Adicione uma nova tarefa" />
-          <button>
+          <input 
+            type="text" 
+            placeholder="Adicione uma nova tarefa" 
+            value={taskInput}
+            onChange={(e) => setTaskInput(e.target.value)}
+          />
+          <button onClick={() => createTask()}>
             <span>Criar</span>
             <PlusCircle size={19} weight="bold" />
           </button>
@@ -31,16 +63,21 @@ export const Body = () => {
           </div>
         </div>
         <div className="tasks-wrapper">
-          <div className="task-line">
-            <div className="not-complete"></div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio enim exercitationem quas mollitia, corrupti voluptatem consequuntur praesentium deleniti aliquid commodi, cumque nam quibusdam, saepe officiis. Eligendi facilis adipisci dicta veniam?</p>
-            <img src={trash} alt="delete icon" id="delete-icon" />
-          </div>
-          <div className="task-line">
-            <div className="not-complete"></div>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-            <img src={trash} alt="delete icon" />
-          </div>
+          {
+            tasks.map((task) => (
+              <div className="task-line" key={task.id}>
+                <div className="not-complete"></div>
+                <p>{task.description}</p>
+                <img 
+                  src={trash} 
+                  alt="delete icon" 
+                  id="delete-icon" 
+                  onClick={() => deleteTask()} 
+                />
+              </div>
+            ))
+          }
+          
         </div>
         {/* <div className="empty-wrapper">
           <img src={clipboard} alt="clipboard" />
